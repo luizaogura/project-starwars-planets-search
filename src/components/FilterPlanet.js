@@ -8,6 +8,7 @@ function FilterPlanet() {
       <input
         data-testid="name-filter"
         value={ filter.name }
+        name="name"
         onChange={ handleChange }
         type="text"
       />
