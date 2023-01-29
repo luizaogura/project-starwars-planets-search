@@ -4,14 +4,19 @@ function useFilter() {
       .filter(({ name }) => name.toLowerCase().includes(input.toLowerCase()));
     return result;
   };
-  const handleNumberFilter = ({ column, comparision, valueProperty }, arrayInicial) => {
-    const result = arrayInicial.filter((planet) => {
+  const handleNumberFilter = (filters, arrayInicial) => {
+    let result = arrayInicial;
+    filters.forEach(({ column, comparision, valueProperty }) => {
       if (comparision === 'maior que') {
-        return Number(planet[column]) > Number(valueProperty);
-      } if (comparision === 'igual a') {
-        return Number(planet[column]) === Number(valueProperty);
+        result = result
+          .filter((planet) => Number(planet[column]) > Number(valueProperty));
+      } else if (comparision === 'igual a') {
+        result = result
+          .filter((planet) => Number(planet[column]) === Number(valueProperty));
+      } else {
+        result = result
+          .filter((planet) => Number(planet[column]) < Number(valueProperty));
       }
-      return Number(planet[column]) < Number(valueProperty);
     });
     return result;
   };

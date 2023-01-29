@@ -14,9 +14,12 @@ function FilterProvider({ children }) {
     valueProperty: '0',
   });
   const [planetsArray, filterPlanets] = useState([]);
+  const [filterArray, handleFilterArray] = useState([]);
 
   const getNumberFilter = () => {
-    filterPlanets(handleNumberFilter(filter, tablePlanets));
+    const newFilterArray = [...filterArray, filter];
+    handleFilterArray(newFilterArray);
+    filterPlanets(handleNumberFilter(newFilterArray, tablePlanets));
   };
 
   const handleChange = ({ target }) => {
@@ -31,8 +34,8 @@ function FilterProvider({ children }) {
   }, [filter.name, planets, tablePlanets]);
 
   const values = useMemo(() => ({
-    planetsArray, filter, handleChange, getNumberFilter,
-  }), [planets, tablePlanets, planetsArray, filter]);
+    planetsArray, filter, handleChange, getNumberFilter, filterArray,
+  }), [planets, tablePlanets, planetsArray, filter, filterArray]);
 
   return (
     <FilterContext.Provider value={ values }>
