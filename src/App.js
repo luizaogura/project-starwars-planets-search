@@ -1,11 +1,21 @@
-import React from 'react';
+import { React } from 'react';
 import './App.css';
+import FilterPlanet from './components/FilterPlanet';
+import PlanetsTable from './components/PlanetsTable';
+import TableProvider from './context/TableProvider';
+import FilterProvider from './context/FilterProvider';
 
 // começando novo projeto
 
 function App() {
   return (
-    <span>Hello, App!</span>
+    <TableProvider>
+      <FilterProvider>
+        <FilterPlanet />
+        <PlanetsTable />
+      </FilterProvider>
+    </TableProvider>
+
   );
 }
 
