@@ -2,7 +2,9 @@ import { useContext } from 'react';
 import FilterContext from '../context/FilterContext';
 
 function FilterPlanet() {
-  const { handleChange, filter, getNumberFilter } = useContext(FilterContext);
+  const { handleChange, filter, getNumberFilter, filterOptions,
+    filterArray, remove, removeAll } = useContext(FilterContext);
+  console.log(filterArray);
   return (
     <div>
       <input
@@ -19,31 +21,9 @@ function FilterPlanet() {
         onChange={ handleChange }
         value={ filter.column }
       >
-        <option
-          value="population"
-        >
-          population
-        </option>
-        <option
-          value="orbital_period"
-        >
-          orbital_period
-        </option>
-        <option
-          value="diameter"
-        >
-          diameter
-        </option>
-        <option
-          value="rotation_period"
-        >
-          rotation_period
-        </option>
-        <option
-          value="surface_water"
-        >
-          surface_water
-        </option>
+        {filterOptions.map((option) => (
+          <option key={ option } value={ option }>{option}</option>
+        ))}
       </select>
       <select
         name="comparision"
@@ -83,6 +63,28 @@ function FilterPlanet() {
       >
         Filtrar
       </button>
+      <button
+        type="button"
+        onClick={ removeAll }
+        data-testid="button-remove-filters"
+      >
+        Remover filtros
+      </button>
+      {filterArray.map((filterSelected) => (
+        <div key={ filterSelected.column } data-testid="filter">
+          <div>
+            {`${filterSelected.column} ${filterSelected.comparision}
+             ${filterSelected.valueProperty}`}
+          </div>
+          <button
+            type="button"
+            onClick={ remove }
+            name={ filterSelected.column }
+          >
+            Remover filtro
+          </button>
+        </div>
+      ))}
     </div>
   );
 }
